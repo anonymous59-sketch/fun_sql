@@ -24,7 +24,7 @@
  FROM emp
  WHERE sal <= 3000
  AND sal >= 2000;
- -- 위 구문을 간단하게 작성
+ -- 위 구문을 간단하게 작성하면 아래 구문이 된다
  
  SELECT *
  FROM emp
@@ -57,7 +57,8 @@ AND ename NOT IN ('SMITH', 'FORD');
 SELECT *
 FROM emp
 WHERE comm IS NOT null; 
--- 값이 ''이라는 공백이라는 뜻과는 다름, null은 계산 못하는 특이값이라고 생각하면 된다. 그래서 = null이라고 사용하면 안되고 is null이나 is not null 이라고 사용해야된다. null은 비교를 못함
+-- 값이 ''이라는 공백이라는 뜻과는 다름, null은 계산 못하는 특이값이라고 생각하면 된다. 
+-- 그래서 = null이라고 사용하면 안되고 is null이나 is not null 이라고 사용해야된다. null은 비교를 못함
 
 -- LIKE ( = )
 SELECT *
@@ -133,4 +134,3 @@ SELECT ename || q'['s sal is $]' || sal
               as "Name And Sal"
 FROM emp
 ORDER BY empno;
-
