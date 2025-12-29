@@ -55,7 +55,7 @@ order by hiredate;
 SELECT ename || q'['s sal is $]' || sal 
               as "Name And Sal"
 FROM emp
-order by hiredate;
+ORDER BY empno;
 
 SELECT *
 FROM emp;

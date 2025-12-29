@@ -11,3 +11,10 @@ alter session set "_oracle_script"=true; -- 이걸 실행하고 아래 것을 실행하면 됨
  
  grant connect, resource, unlimited tablespace
  to scott; -- scott 계정에 사용자 만드는 것에 대한 권한 부여
+ 
+ create user hr
+ identified by hr
+ default tablespace users
+ temporary tablespace temp;
+ 
+ grant connect, resource, unlimited tablespace to hr;
