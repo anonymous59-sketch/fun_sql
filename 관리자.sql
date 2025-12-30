@@ -1,16 +1,16 @@
 select * from all_users;
 
--- °øÅë»ç¿ëÀÚ ¶Ç´Â ·Ñ ÀÌ¸§ÀÌ ºÎÀûÇÕÇÑ °ÍÀ» Ç®±â À§ÇÑ ¼¼¼Ç ¼³Á¤
-alter session set "_oracle_script"=true; -- ÀÌ°É ½ÇÇàÇÏ°í ¾Æ·¡ °ÍÀ» ½ÇÇàÇÏ¸é µÊ
+-- ê³µí†µì‚¬ìš©ì ë˜ëŠ” ë¡¤ ì´ë¦„ì´ ë¶€ì í•©í•œ ê²ƒì„ í’€ê¸° ìœ„í•œ ì„¸ì…˜ ì„¤ì •
+alter session set "_oracle_script"=true; -- ì´ê±¸ ì‹¤í–‰í•˜ê³  ì•„ë˜ ê²ƒì„ ì‹¤í–‰í•˜ë©´ ë¨
 
--- scott »ç¿ëÀÚ / tiger(ºñ¹Ğ¹øÈ£) / ÀÏ¹İ»ç¿ëÀÚ ±ÇÇÑ
+-- scott ì‚¬ìš©ì / tiger(ë¹„ë°€ë²ˆí˜¸) / ì¼ë°˜ì‚¬ìš©ì ê¶Œí•œ
  create user scott
  identified by tiger
  default tablespace users
  temporary tablespace temp;
  
  grant connect, resource, unlimited tablespace
- to scott; -- scott °èÁ¤¿¡ »ç¿ëÀÚ ¸¸µå´Â °Í¿¡ ´ëÇÑ ±ÇÇÑ ºÎ¿©
+ to scott; -- scott ê³„ì •ì— ì‚¬ìš©ì ë§Œë“œëŠ” ê²ƒì— ëŒ€í•œ ê¶Œí•œ ë¶€ì—¬
  
  create user hr
  identified by hr

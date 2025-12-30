@@ -3,16 +3,16 @@ FROM tab;
 
 SELECT *
 FROM employees
--- °èÁ¤¸¶´Ù tableÀ» È®ÀÎÇÒ ¼ö ÀÖ´Â ±ÇÇÑÀÌ ´Þ¶ó¼­ ´Ù¸¥ °èÁ¤ÀÇ tableÀ» È®ÀÎÇÒ ¼ö ¾ø´Ù.
+-- ê³„ì •ë§ˆë‹¤ tableì„ í™•ì¸í•  ìˆ˜ ìžˆëŠ” ê¶Œí•œì´ ë‹¬ë¼ì„œ ë‹¤ë¥¸ ê³„ì •ì˜ tableì„ í™•ì¸í•  ìˆ˜ ì—†ë‹¤.
 -- WHERE job_id = 'IT_PROG'
 WHERE employee_id = 103;
 
 SELECT *
 FROM departments;
 
--- oracle µ¥ÀÌÅÍº£ÀÌ½º´Â °ü°èÇü µ¥ÀÌÅÍº£ÀÌ½ºÀÌ´Ù.
+-- oracle ë°ì´í„°ë² ì´ìŠ¤ëŠ” ê´€ê³„í˜• ë°ì´í„°ë² ì´ìŠ¤ì´ë‹¤.
 
--- Shipping ºÎ¼­ÀÇ ¸ðµç »ç¿øµéÀ» Á¶È¸ÇÏ±â
+-- Shipping ë¶€ì„œì˜ ëª¨ë“  ì‚¬ì›ë“¤ì„ ì¡°íšŒí•˜ê¸°
 SELECT *
 FROM employees
 WHERE department_id = 50
@@ -21,7 +21,7 @@ AND salary >= 3000;
 SELECT *
 FROM departments;
 
--- ±Þ¿©°¡ 10000 ÃÊ°úÇÏ´Â »ç¶÷µé Á¶È¸. ´Ü,  commission_pct ±îÁö Æ÷ÇÔÇØ¼­ Á¶È¸
+-- ê¸‰ì—¬ê°€ 10000 ì´ˆê³¼í•˜ëŠ” ì‚¬ëžŒë“¤ ì¡°íšŒ. ë‹¨,  commission_pct ê¹Œì§€ í¬í•¨í•´ì„œ ì¡°íšŒ
 SELECT *
 FROM employees
 WHERE salary * (1 + nvl(commission_pct, 0)) > 10000
