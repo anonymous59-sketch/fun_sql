@@ -228,17 +228,160 @@ FROM student;
 -- 120p
 SELECT name
 	  ,jumin
-	  ,DECODE(SUBSTR(jumin, 7, 1), 1, 'MAN', 'WOMAN') "Gender"
+	  ,DECODE(SUBSTR(jumin, 7, 1), '1', 'MAN', '2', 'WOMAN') "Gender"
 FROM student
 WHERE deptno1 = 101;
 
 SELECT name
 	  ,tel
-	  ,DECODE(SUBSTR(tel, 1, INSTR(tel,')', 1) -1), 02, 'SEOUL',
-	  											    031, 'GYEONGGI',
-	  											    051, 'BUSAN',
-	  											    052, 'ULSAN',
-	  											    055, 'GYEONGNAM',
-	  											    '확인 필요')
+	  ,DECODE(SUBSTR(tel, 1, INSTR(tel,')', 1) - 1)
+	  		  , '02', 'SEOUL'
+	  		  , '031', 'GYEONGGI'
+	  		  , '051', 'BUSAN'
+	  		  , '052', 'ULSAN'
+  		      , '053', 'DAEGU'
+	  		  , '055', 'GYEONGNAM'
+	  		  , '확인 필요') "LOC"
 FROM student
 WHERE deptno1 = 101;
+
+-- CASE 구문으로 변경
+SELECT name
+	  ,tel
+	  ,CASE SUBSTR(tel, 1, INSTR(tel, ')', 1) -1) WHEN '02' THEN 'SEOUL'
+	  											  WHEN '031' THEN 'GYEONGGI'
+	  											  WHEN '051' THEN 'BUSAN'
+	  											  WHEN '052' THEN 'ULSAN'
+	  											  WHEN '055' THEN 'GYEONGNAM'
+	  											  ELSE 'ETC'
+	   END "LOC 2"
+-- CASE column WHEN '조건' THEN '값'
+FROM student
+WHERE deptno1 = 201;
+
+SELECT name
+	  ,jumin
+	  ,CASE SUBSTR(jumin, 7, 1) WHEN '1' THEN 'MAN'
+	  							WHEN '2' THEN 'WOMAN'
+	  							ELSE 'ETC'
+	  END "Gender"
+-- CASE 구문은 자동형변환이 안되는 경우도 있으니 자료형을 정확히 적어주자
+-- CASE 구문이 데이터베이스 표준 함수, DECODE 구문은 ORACLE 데이터베이스만의 함수
+FROM student
+WHERE deptno1 = 101;
+
+-- CASE 구문을 통해 범위 지정 조건
+SELECT name
+	  ,SUBSTR(jumin, 3, 2) "Month"
+--	  ,CASE WHEN SUBSTR(jumin, 3, 2) >= '01' AND SUBSTR(jumin, 3, 2) <= '03' THEN '1/4'
+--	  		WHEN SUBSTR(jumin, 3, 2) >= '04' AND SUBSTR(jumin, 3, 2) <= '06' THEN '2/4'
+--	  		WHEN SUBSTR(jumin, 3, 2) >= '07' AND SUBSTR(jumin, 3, 2) <= '09' THEN '3/4'
+--	  		WHEN SUBSTR(jumin, 3, 2) >= '10' AND SUBSTR(jumin, 3, 2) <= '12' THEN '4/4'
+	  ,CASE WHEN SUBSTR(jumin, 3, 2) BETWEEN '01' AND '03' THEN '1/4'
+	  		WHEN SUBSTR(jumin, 3, 2) BETWEEN '04' AND '06' THEN '2/4'
+	  		WHEN SUBSTR(jumin, 3, 2) BETWEEN '07' AND '09' THEN '3/4'
+	  		WHEN SUBSTR(jumin, 3, 2) BETWEEN '10' AND '12' THEN '4/4'
+	  END "Qua"
+FROM student;
+
+-- 123p
+SELECT empno
+	  ,ename
+	  ,sal
+	  ,CASE WHEN sal >= '1' AND sal <= '1000' THEN 'LEVEL 1'
+	  		WHEN sal > '1000' AND sal <= '2000' THEN 'LEVEL 2'
+	  		WHEN sal > '2000' AND sal <= '3000' THEN 'LEVEL 3'
+	  		WHEN sal > '3000' AND sal <= '4000' THEN 'LEVEL 4'
+	  		WHEN sal > '4000' AND sal <= '5000' THEN 'LEVEL 5'
+	  	END "LEVEL"
+FROM emp
+ORDER BY 4 DESC, 3 DESC;
+-- 정규식은 우선 넘어감
+
+
+ DESC student; 
+ --이건 SQLPLUS 기반의 예약어
+
+-- GROUP(복수행) 함수
+-- 부서번호별로 그룹화 하기
+-- GROUP BY에 있는 값이 기준, 기준이 가장 작은 단위의 데이터라서 그 안의 세부내용을 더 나누어서 확인할 수 없음
+-- GROUP BY가 기준이기에 기준 이외의 값을 가져올 수 없다. 따라서 다른 행을 보려고 하면 GROUP BY 표현식 오류가 생긴다.
+-- GROUP BY가 없으면 전체 table에 대해서 분석하겠다라는 의미
+-- GROUP BY column으로 사용하는데 출력값은 해당 column의 값을 기준으로 그룹화하여 보여준다.
+SELECT deptno
+FROM emp
+GROUP BY deptno;
+
+SELECT deptno
+	  ,COUNT(*) "인원"
+	  ,SUM(sal) "부서별 급여"
+FROM emp
+GROUP BY deptno;
+
+SELECT deptno
+	  ,job
+	  ,COUNT(*) "수"
+-- COUNT(1) 이렇게 적으면 첫 번째 column을 기준으로 세겠다라는 의미, Primary Key라서 무조건 존재해야되며 중복이 안되기때문에 count로 총 갯수를 세기 위해서 자주 사용
+	  ,SUM(sal) "직무별 급여합계"
+	  ,SUM(sal + nvl(comm,0)) "커미션포함 급여합계"
+--	  ,ROUND(SUM(sal + NVL(comm,0)) / COUNT(1)) "직무별 평균 급여"
+	  ,ROUND(AVG(sal + NVL(comm,0))) "직무별 평균 급여"
+	  ,MIN(sal + NVL(comm,0)) "최저급여"
+	  ,MAX(sal + NVL(comm,0)) "최고급여"
+	  ,STDDEV(sal) "표준편차"
+	  ,VARIANCE(sal) "분산"
+FROM emp
+GROUP BY deptno, job;
+
+-- 직무별로 그룹
+SELECT job
+	  ,SUM(sal) "총 급여"
+	  ,ROUND(AVG(sal)) "평균급여"
+FROM emp
+GROUP BY job
+HAVING ROUND(AVG(sal)) > 1500
+-- GROUP 함수를 사용할 때는 조건을 걸 때 WHERE가 아닌 HAVING을 사용해야된다.
+-- FROM table > where > SELECT column > group 순서로 쿼리가 작동한다
+--UNION ALL
+--SELECT '합계'
+--	  ,SUM(sal)
+--	  ,ROUND(AVG(sal))
+--FROM emp
+;
+
+-- 부서 / 직무/ 정보조회(평균급여, 사원수)
+-- 1번 쿼리를 하나씩 만들어서 모두 합치기
+SELECT deptno||'' "번호"
+	  ,job "직무"
+	  ,AVG(sal) "평균급여"
+	  ,COUNT(1) "수"
+FROM emp
+GROUP BY deptno, job
+-- 줄이 있음
+UNION ALL
+SELECT deptno||''
+	  ,'소계'
+	  ,ROUND(AVG(sal))
+	  ,COUNT(1)
+FROM emp
+GROUP BY deptno
+UNION ALL
+SELECT '전체'
+	  ,''
+	  ,ROUND(AVG(sal))
+	  ,COUNT(1)
+FROM emp
+ORDER BY 1, 2;
+
+-- 2 ROLLUP 함수를 이용해서 만들기
+SELECT NVL(deptno||'','전체') "DEPTNO"
+	  ,DECODE(deptno, NULL, ' ', NVL(job, '소계')) "JOB"
+	  ,ROUND(AVG(sal)) "AVG_SAL"
+	  ,COUNT(1) "CNT_emp"
+--	  ,NVL(deptno, 1) order_by
+-- 문자는 왼쪽정렬, 숫자는 오른쪽정렬
+FROM emp
+GROUP BY ROLLUP(deptno, job)
+ORDER BY 1, 2;
+
+-- 220p 전까지의 내용들 읽어보면서 실습해보기
