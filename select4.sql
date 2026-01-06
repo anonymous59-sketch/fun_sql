@@ -181,6 +181,12 @@ FROM gift g
 JOIN customer c ON c.point > 600000
 WHERE g.gno = 7
 ;
+SELECT c.gname "CUST_NAME"
+	 , c.point "POINT"
+	 , g.gname "GIFT_NAME"
+FROM customer c
+JOIN gift g ON c.point >= 600001 AND g.gno = 7;
+
 
 SELECT p1.profno "PROFNO"
      , p1.name "NAME"
@@ -197,8 +203,17 @@ FROM emp;
 SELECT e1.empno empno
      , e1.ename ename
      , e1.hiredate hiredate
-     , COUNT(e2.hiredate)
+     , COUNT(e2.hiredate) count
 FROM emp e1
 LEFT OUTER JOIN emp e2 ON e1.hiredate > e2.hiredate
+GROUP BY e1.empno, e1.ename, e1.hiredate
+ORDER BY 4;
+
+SELECT e1.empno empno
+	 , e1.ename ename
+	 , e1.hiredate hiredate
+	 , COUNT(e2.empno) count
+FROM emp e1, emp e2
+WHERE e1.hiredate > e2.hiredate(+)
 GROUP BY e1.empno, e1.ename, e1.hiredate
 ORDER BY 4;
