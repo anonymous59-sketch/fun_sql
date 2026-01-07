@@ -18,3 +18,7 @@ alter session set "_oracle_script"=true; -- 이걸 실행하고 아래 것을 �
  temporary tablespace temp;
  
  grant connect, resource, unlimited tablespace to hr;
+ 
+ grant create view to hr;
+ -- view 생성 권한
+ grant create view to scott;

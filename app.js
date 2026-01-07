@@ -12,12 +12,26 @@ app.get('/', (req, res) => { // 첫번째 매개값 (요청정보에 포함되�
   res.send('박상원 홈에 오신 것을 환영합니다.');
 });
 
-app.get('/customer', (req, res) => {
-  res.send('박상원 customer');
-});
+// app.get('/customer', (req, res) => {
+//   res.send('박상원 customer');
+// });
 
-app.get('/product', (req,res) => {
-  res.send('박상원 product');
+// app.get('/product', (req,res) => {
+//   res.send('박상원 product');
+// });
+
+// INSERT INTO 기능 만들어보기
+app.get('/add_board', async(req, res) => {
+  const qry = `INSERT INTO board (board_no, title, content, writer)
+               VALUES(6, 'test', 'content', 'user01')`;
+  try {
+    const connection = await db.getConnection();
+    const result = await connection.execute(qry);
+    res.send('처리완료');
+  } catch(err) {
+    console.log(err);
+    res_send('처리중 에러');
+  }
 });
 
 // "/student" -> 화면에 출력
@@ -28,7 +42,7 @@ app.get('/student/:studno1'/* :studno는 studno라는 변수값을 사용자의 
   const connection = await db.getConnection();
   const result = await connection.execute(qry);
   res.send(result.rows); // 반환되는 결과값 중에서 rows라는 속성의 값만 가져오기
-})
+});
 
 // '/employee' 사원목록을 출력하는 라우팅
 app.get('/employee/:empno', async(req, res) => {
@@ -38,7 +52,7 @@ app.get('/employee/:empno', async(req, res) => {
   const conncection = await db.getConnection();
   const result = await conncection.execute(qry);
   res.send(result.rows);
-})
+});
 
 // 서버 실행
 app.listen(3000, () => {
