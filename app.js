@@ -25,11 +25,11 @@ app.get('/boards', async (req,res) => {
   try {
     const connection = await db.getConnection();
     const result = await connection.execute(qry); 
-    console.log('성공');
+    console.log('성공 boards');
     res.send(result.rows);
   } catch(err) {
     console.log(err);
-    res.send('실패');
+    res.send('실패 boards');
   }
 })
 
@@ -59,10 +59,10 @@ app.post('/add_board', async(req, res) => {
       title,
       content,
       writer,
-      write_date
+      new Date(write_date)
     ]);
     // binding 방식 
-    console.log(result);
+    // console.log(result);
     connection.commit();
     // commit()을 해줘야 데이터베이스에 적용이 된다.
     res.json({board_no, title, content, writer, write_date});
@@ -77,17 +77,19 @@ app.post('/add_board', async(req, res) => {
 });
 
 app.get(`/remove_board/:board_no`, async(req, res) => {
-  console.log(req.params.board_no);
+  // console.log(req.params.board_no);
   const del_no = req.params.board_no;
   try{
     const qry = `DELETE FROM board WHERE board_no = ${del_no}`;
     const connection = await db.getConnection();
-    await connection.execute(qry);
-    const qry1 = `SELECT * FROM board ORDER BY 1`;
-    console.log('성공');
-    res.send(result.rows);
+    const result = await connection.execute(qry);
+    console.log('성공 remove_board');
+    connection.commit();
+    // console.log(result);
+    res.json({retCode:'OK'});
   } catch(err) {
     console.log(err);
+    res.json({retCode:'NG'});
   }
 })
 
