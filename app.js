@@ -45,7 +45,7 @@ app.get('/boards', async (req,res) => {
 // post 요청방식은 많은 데이터를 전달할 수 있고 보안도 되어있다. body영역
 // INSERT INTO 기능 만들어보기
 app.post('/add_board', async(req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const {board_no, title, content, writer, write_date} = req.body; // 객체로 값을 빠르게 받아오는 방법
   // console.log(board_no, title);
   const qry = /* `INSERT INTO board (board_no, title, content, writer)
@@ -95,7 +95,7 @@ app.get(`/remove_board/:board_no`, async(req, res) => {
 
 // "/student" -> 화면에 출력
 app.get('/student/:studno1'/* :studno는 studno라는 변수값을 사용자의 요청 정보로 받아서 사용하겠다. */, async(req, res) => {
-  console.log(req.params.studno1);
+  // console.log(req.params.studno1);
   const studno = req.params.studno1;
   const qry = `SELECT * FROM student WHERE studno = ${studno}`;
   const connection = await db.getConnection();
@@ -105,7 +105,7 @@ app.get('/student/:studno1'/* :studno는 studno라는 변수값을 사용자의 
 
 // '/employee' 사원목록을 출력하는 라우팅
 app.get('/employee/:empno', async(req, res) => {
-  console.log(req.params.empno);
+  // console.log(req.params.empno);
   const empno = req.params.empno;
   try{
     const qry = `SELECT * FROM emp WHERE empno = ${empno}`;

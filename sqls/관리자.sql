@@ -22,3 +22,11 @@ alter session set "_oracle_script"=true; -- 이걸 실행하고 아래 것을 �
  grant create view to hr;
  -- view 생성 권한
  grant create view to scott;
+ 
+ create user testUser
+ identified by test
+ default tablespace users
+ temporary tablespace temp;
+ 
+ grant connect, resource, unlimited tablespace to testUser;
+ grant create view to testUser;
