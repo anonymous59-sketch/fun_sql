@@ -19,4 +19,3 @@ INSERT INTO board (title, content, writer)
 VALUES ("제목2", "내용2", "작성자2");
 INSERT INTO board (title, content, writer)
 VALUES ("제목3", "내용3", "작성자3");
-
