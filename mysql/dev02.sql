@@ -10,12 +10,18 @@ CREATE TABLE board (
 
 ALTER TABLE board MODIFY writer VARCHAR(50) NOT NULL;
 
-SELECT *
+SELECT count(*)
 FROM board;
 
+SELECT *
+FROM board
+ORDER BY 1
+LIMIT 10 OFFSET 0;
+-- LIMIT 가지고 오고싶은 수, OFFSET 이 수 다음의 것부터 가져오기
+
 INSERT INTO board (title, content, writer)
-VALUES ("제목1", "내용1", "작성자1");
-INSERT INTO board (title, content, writer)
-VALUES ("제목2", "내용2", "작성자2");
-INSERT INTO board (title, content, writer)
-VALUES ("제목3", "내용3", "작성자3");
+SELECT title, content, writer
+FROM board;
+
+DELETE FROM board
+WHERE id > 500;
