@@ -23,3 +23,14 @@ WHERE id >= 5;
 
 DELETE FROM customers
 WHERE id <= 5;
+
+CREATE TABLE member (
+  user_id VARCHAR(45) NOT NULL,
+  user_pw VARCHAR(100) NOT NULL,
+  user_name VARCHAR(100) NOT NULL,
+  user_img VARCHAR(100),
+  PRIMARY KEY (user_id)
+);
+
+SELECT *
+FROM member;
