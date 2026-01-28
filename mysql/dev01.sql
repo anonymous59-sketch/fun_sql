@@ -48,10 +48,10 @@ VALUES ('22', 'test', 'test', 'test', 'ad');
 
 UPDATE member
 SET responsibility = 'Admin'
-WHERE user_id = '1';
+WHERE user_id = '12';
 
 DELETE FROM member
-WHERE user_id = '11';
+WHERE user_id = '152' OR user_id = '235';
 
 SELECT *
 FROM member;
