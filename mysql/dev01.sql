@@ -33,4 +33,25 @@ CREATE TABLE member (
 );
 
 SELECT *
+FROM member
+ORDER BY 1;
+
+-- sql safe updates 푸는 방법, 0: 풀기, 1: 설정
+SET SQL_SAFE_UPDATES = 1;
+DELETE FROM member;
+
+-- column 추가 일반사용자 / 관리자 구분, enum(a,b) a 또는 b 값만 들어올 수 있다.
+ALTER TABLE member ADD COLUMN responsibility enum('Admin', 'User') DEFAULT 'User';
+
+INSERT INTO member 
+VALUES ('22', 'test', 'test', 'test', 'ad');
+
+UPDATE member
+SET responsibility = 'Admin'
+WHERE user_id = '1';
+
+DELETE FROM member
+WHERE user_id = '11';
+
+SELECT *
 FROM member;
