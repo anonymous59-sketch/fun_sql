@@ -51,7 +51,7 @@ SET responsibility = 'Admin'
 WHERE user_id = '12';
 
 DELETE FROM member
-WHERE user_id = '152' OR user_id = '235';
+WHERE user_id = 'test123' OR user_id = 'test1234' OR user_id = 'test1235';
 
 SELECT *
 FROM member;
