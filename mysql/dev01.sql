@@ -55,3 +55,7 @@ WHERE user_id = '테스트1' OR user_id = 'test1234' OR user_id = 'test1235';
 
 SELECT *
 FROM member;
+
+SHOW VARIABLES LIKE 'max_connections';
+SHOW STATUS LIKE 'Threads_connected';
+SHOW PROCESSLIST;
